@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<table class="table align-items-center mb-0 table-hover" id="board-table" th:fragment="tableFragment">
+    <thead>
+    <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">ID</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">제목</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">작성자</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">게시일자</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="content : ${contents}" th:onclick="'location.href=\'/admin/board/edit/' + @{${content.id}} + '\''">
+        <td class="text-center">
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${content.id}"></span>
+        </td>
+        <td class="text-center">
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${content.title}"></span>
+        </td>
+        <td class="text-center">
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${content.refUserEntity.name}"></span>
+        </td>
+        <td class="text-center">
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${content.createDate}"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</html>

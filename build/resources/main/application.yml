@@ -1,0 +1,53 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /
+    session:
+      cookie:
+        path: /
+        http-only: true
+        secure: false
+        max-age: 8h
+        name: selling-insight
+      timeout: 8h
+
+  error:
+    include-exception: true
+    include-stacktrace: never
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  profiles:
+    active: local
+  devtools:
+    livereload:
+      enabled: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mediring?serverTimezone=UTC&useLegacyDatetimeCode=false&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+  resources:
+    static-locations: classpath:/
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        format_sql: true
+        temp:
+          use_jdbc_metadata_defaults: false
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+  jackson:
+    serialization:
+      fail-on-empty-beans: false

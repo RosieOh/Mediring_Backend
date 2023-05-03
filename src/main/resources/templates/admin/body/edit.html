@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/static/img/apple-icon.png}">
+    <link rel="icon" type="image/png" th:href="@{/static/img/logo.png}">
+    <title>메디링 관리자</title>
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link th:href="@{/static/css/nucleo-icons.css}" rel="stylesheet" />
+    <link th:href="@{/static/css/nucleo-svg.css}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link th:href="@{/static/css/nucleo-svg.css}" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" th:href="@{/static/css/argon-dashboard.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/css/flag-icons.min.css" integrity="sha512-UwbBNAFoECXUPeDhlKR3zzWU3j8ddKIQQsDOsKhXQGdiB5i3IHEXr9kXx82+gaHigbNKbTDp3VY/G6gZqva6ZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+
+<div class="min-height-300 bg-primary position-absolute w-100"></div>
+
+<div th:replace="~{admin/side-nav/side_nav::sideNavFragment}"></div>
+
+<main class="main-content position-relative border-radius-lg">
+    <!-- Navbar -->
+    <div th:replace="~{admin/top-nav/top_nav::topNavFragment}"></div>
+    <!-- End Navbar -->
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <form th:action="@{/admin/body/edit}" method="post" enctype="multipart/form-data">
+                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+                            <span class="card-title h5 d-block text-darker">신체부위 추가</span>
+                        </div>
+
+                        <input style="display: none" th:value="${body.id}" name="id">
+
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="body-title">신체부위 명</label>
+                                        <input type="text" class="form-control" id="body-title" aria-describedby="basic-addon3" name="name" th:value="${body.name}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="body-line">표시 줄</label>
+                                        <input type="number" class="form-control" id="body-line" name="line" th:value="${body.line}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="body-icon">신체부위 아이콘</label>
+                                        <input class="form-control" type="file" id="body-icon" name="icon"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-end">
+                                <div class="col-2">
+                                    <div class="row px-2">
+                                        <button id="body-delete-button" class="btn btn-warning" type="button" th:onclick="'location.href=\'/admin/body/delete/' + @{${body.id}} + '\''">삭제하기</button>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="row px-2">
+                                        <button class="btn btn-primary" type="submit">등록하기</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/core/popper.min.js}"></script>
+<script th:src="@{/js/core/bootstrap.min.js}"></script>
+
+<!-- Plugin for the charts, full documentation here: https://www.chartjs.org/ -->
+<script th:src="@{/js/plugins/chartjs.min.js}"></script>
+<!--<script th:src="@{/js/plugins/Chart.extension.js}"></script>-->
+
+<script th:src="@{/js/argon-dashboard.min.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<table class="table align-items-center mb-0 table-hover" id="user-table" th:fragment="tableFragment">
+    <thead>
+    <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">E-Mail</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">이름</th>
+        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">휴대폰 번호</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}" th:onclick="'location.href=\'/admin/user/edit/' + @{${user.id}} + '\''">
+        <td>
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${user.email}"></span>
+        </td>
+        <td>
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${user.name}"></span>
+        </td>
+        <td>
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${user.phone}"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</html>

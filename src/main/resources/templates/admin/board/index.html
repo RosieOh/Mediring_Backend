@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/static/img/apple-icon.png}">
+    <link rel="icon" type="image/png" th:href="@{/static/img/logo.png}">
+    <title>메디링 관리자</title>
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link th:href="@{/static/css/nucleo-icons.css}" rel="stylesheet" />
+    <link th:href="@{/static/css/nucleo-svg.css}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link th:href="@{/static/css/nucleo-svg.css}" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" th:href="@{/static/css/argon-dashboard.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/4.1.4/css/flag-icons.min.css" integrity="sha512-UwbBNAFoECXUPeDhlKR3zzWU3j8ddKIQQsDOsKhXQGdiB5i3IHEXr9kXx82+gaHigbNKbTDp3VY/G6gZqva6ZQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+
+<div class="min-height-300 bg-primary position-absolute w-100"></div>
+
+<div th:replace="~{admin/side-nav/side_nav::sideNavFragment}"></div>
+
+<main class="main-content position-relative border-radius-lg">
+    <!-- Navbar -->
+    <div th:replace="~{admin/top-nav/top_nav::topNavFragment}"></div>
+    <!-- End Navbar -->
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="nav-wrapper position-relative end-0 py-4">
+                                    <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                                        <li class="nav-item" th:each="board : ${boards}">
+                                            <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" role="tab" th:href="'#' + @{${board.title}}" th:aria-controls="${board.id}" aria-selected="true" th:text="${board.title}"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="table-responsive">
+                                        <div id="board-table" th:replace="~{admin/board/fragment/table::tableFragment}"></div>
+                                    </div>
+
+                                    <div class="row py-4">
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination justify-content-md-center"
+                                                th:with="start=${T(Math).floor(contents.number/10)*10 + 1},
+                                                 last=(${start + 9 < contents.totalPages ? start + 9 : contents.totalPages})">
+                                                <th:block
+                                                        th:with="
+                                                        firstAddr=@{/board(page=1)},
+                                                        prevAddr=@{/board(page=${contents.number})},
+                                                        nextAddr=@{/board(page=${contents.number + 2})},
+                                                        lastAddr=@{/board(page=${contents.totalPages})}
+                                                        ">
+                                                    <li class="page-item">
+                                                        <a th:class="${contents.first} ? 'page-link disabled' : 'page-link'" th:href="${contents.first} ? '#' : ${prevAddr}" tabindex="-1">
+                                                            <i class="fa fa-angle-left"></i>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                    </li>
+                                                    <li th:each="num : ${#numbers.sequence(start, last)}" th:class="${num == contents.number + 1} ? 'page-item active' : 'page-item'">
+                                                        <a class="page-link" th:style="${num == contents.number + 1} ? 'background-color:; border-color:; color: white'" th:href="@{/board(page=${num})}" th:text="${num}"></a>
+                                                    </li>
+                                                    <li th:class="${contents.last} ? 'page-item disalbed' : 'page-item'">
+                                                        <a class="page-link" th:href="${contents.last} ? '#' : ${nextAddr}">
+                                                            <i class="fa fa-angle-right"></i>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                    </li>
+                                                </th:block>
+                                            </ul>
+                                        </nav>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="row justify-content-end">
+                                            <div class="col-1">
+                                                <div class="row">
+                                                    <a class="btn btn-primary" type="button" th:href="@{/admin/board/store}">게시글 추가</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script th:src="@{/js/core/popper.min.js}"></script>
+<script th:src="@{/js/core/bootstrap.min.js}"></script>
+
+<!-- Plugin for the charts, full documentation here: https://www.chartjs.org/ -->
+<script th:src="@{/js/plugins/chartjs.min.js}"></script>
+<!--<script th:src="@{/js/plugins/Chart.extension.js}"></script>-->
+
+<script th:src="@{/js/argon-dashboard.min.js}"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var tabList = [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]'));
+        tabList.forEach(function(tab){
+            tab.addEventListener("click", function(e) {
+                let categoryId = e.target.getAttribute('aria-controls')
+                $.ajax({
+                    url: '/admin/board/search?boardId=' + categoryId,
+                    type: 'GET',
+                    success: function (data) {
+                        $('#board-table').replaceWith(data);
+                    },
+                    error: function () {
+                        alert('데이터를 받아오지 못했습니다!')
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

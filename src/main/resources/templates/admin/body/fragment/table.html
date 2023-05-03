@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<table class="table align-items-center mb-0 table-hover" id="body-table" th:fragment="tableFragment">
+    <thead>
+    <tr>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">ID</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">신체부위 명</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">표출 라인</th>
+<!--        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">삭제 여부</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="part : ${body}" th:onclick="'location.href=\'/admin/body/edit/' + @{${part.id}} + '\''">
+        <td class="text-center">
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${part.id}"></span>
+        </td>
+        <td class="text-center">
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${part.name}"></span>
+        </td>
+        <td class="text-center">
+            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${part.line}"></span>
+        </td>
+<!--        <td class="text-center">-->
+<!--            <span class="text-secondary text-xs font-weight-bold text-center" th:text="${part.isActive} ? '활성화' : '비활성화'"></span>-->
+<!--        </td>-->
+    </tr>
+    </tbody>
+</table>
+</html>
